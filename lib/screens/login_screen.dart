@@ -22,6 +22,8 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordController.dispose();
   }
 
+  void loginUser() async {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +63,26 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(
               height: 24,
             ),
-            //auth input email & password
+            InkWell(
+              onTap: loginUser,
+              child: Container(
+                width: double.infinity,
+                alignment: Alignment.center,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                decoration: const ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(4)),
+                  ),
+                  color: blueColor,
+                ),
+                child: const Text(
+                  'Log in',
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 12,
+            ),
             //buttons: login & signup
           ],
         ),
