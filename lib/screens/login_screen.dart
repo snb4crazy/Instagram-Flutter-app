@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../utils/colors.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -21,7 +24,14 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            //logo
+            SvgPicture.asset(
+              'assets/ic_instagram.svg',
+              color: primaryColor,
+              height: 64,
+            ),
+            const SizedBox(
+              height: 64,
+            )
             //auth input email & password
             //buttons: login & signup
           ],
