@@ -42,7 +42,7 @@ class _SignupScreenState extends State<SignupScreen> {
       password: _passwordController.text,
       username: _usernameController.text,
       bio: _bioController.text,
-      //file: _image!,
+      file: _image!,
     );
     // if string returned is success, user has been created
     if (res == "success") {
@@ -150,9 +150,15 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   color: blueColor,
                 ),
-                child: const Text(
-                  'Sign Up',
-                ),
+                child: _isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          color: primaryColor,
+                        ),
+                      )
+                    : const Text(
+                        'Sign Up',
+                      ),
               ),
             ),
             const SizedBox(
