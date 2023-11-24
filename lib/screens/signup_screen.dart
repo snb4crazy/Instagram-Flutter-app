@@ -2,8 +2,10 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:instagram/utils/colors.dart';
 import 'package:instagram/utils/dimensions.dart';
+import 'package:instagram/utils/util_functions.dart';
 import 'package:instagram/widgets/text_field_input.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -31,7 +33,12 @@ class _SignupScreenState extends State<SignupScreen> {
 
   void signupUser() async {}
 
-  selectImage() {}
+  Future<void> selectImage() async {
+    Uint8List image = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = image;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +132,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   color: blueColor,
                 ),
                 child: const Text(
-                  'Log in',
+                  'Sign Up',
                 ),
               ),
             ),
@@ -135,33 +142,6 @@ class _SignupScreenState extends State<SignupScreen> {
             Flexible(
               flex: 2,
               child: Container(),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: const Text(
-                    'Dont have an account?',
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const SignupScreen(),
-                    ),
-                  ),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: const Text(
-                      ' Signup.',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
             ),
           ],
         ),
