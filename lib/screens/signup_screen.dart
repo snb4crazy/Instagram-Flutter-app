@@ -7,6 +7,7 @@ import 'package:instagram/utils/colors.dart';
 import 'package:instagram/utils/dimensions.dart';
 import 'package:instagram/utils/util_functions.dart';
 import 'package:instagram/widgets/text_field_input.dart';
+import 'package:instagram/resources/auth_methods.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -31,7 +32,25 @@ class _SignupScreenState extends State<SignupScreen> {
     _bioController.dispose();
   }
 
-  void signupUser() async {}
+  void signupUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    String res = await AuthMethods().signUpUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+      username: _usernameController.text,
+      bio: _bioController.text,
+      //file: _image!,
+    );
+    // if string returned is success, user has been created
+    if (res == "success") {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   Future<void> selectImage() async {
     Uint8List image = await pickImage(ImageSource.gallery);
