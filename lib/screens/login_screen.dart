@@ -7,6 +7,10 @@ import 'package:instagram/widgets/text_field_input.dart';
 import 'package:instagram/resources/auth_methods.dart';
 import 'package:instagram/utils/util_functions.dart';
 
+import 'package:instagram/responsive/mobile_screen_layout.dart';
+import 'package:instagram/responsive/responsive_layout.dart';
+import 'package:instagram/responsive/web_screen_layout.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -33,6 +37,18 @@ class _LoginScreenState extends State<LoginScreen> {
         email: _emailController.text, password: _passwordController.text);
     if (res == 'success') {
       print('logged in:${_emailController.text}');
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => const ResponsiveLayout(
+              mobileScreenLayout: MobileScreenLayout(),
+              webScreenLayout: WebScreenLayout(),
+            ),
+          ),
+          (route) => false);
+
+      setState(() {
+        _isLoading = false;
+      });
     } else {
       print('logged in:fail:${_emailController.text}');
       showSnackBar(context, res);
