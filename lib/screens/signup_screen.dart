@@ -9,6 +9,10 @@ import 'package:instagram/utils/util_functions.dart';
 import 'package:instagram/widgets/text_field_input.dart';
 import 'package:instagram/resources/auth_methods.dart';
 
+import 'package:instagram/responsive/mobile_screen_layout.dart';
+import 'package:instagram/responsive/responsive_layout.dart';
+import 'package:instagram/responsive/web_screen_layout.dart';
+
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
 
@@ -46,6 +50,18 @@ class _SignupScreenState extends State<SignupScreen> {
     );
     // if string returned is success, user has been created
     if (res == "success") {
+      setState(() {
+        _isLoading = false;
+      });
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
+
       setState(() {
         _isLoading = false;
       });
