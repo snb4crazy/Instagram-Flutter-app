@@ -20,6 +20,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
     _descriptionController.dispose();
   }
 
+  void clearImage() {
+    setState(() {
+      _file = null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container();
