@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram/screens/signup_screen.dart';
-
 import 'package:instagram/utils/colors.dart';
 import 'package:instagram/utils/dimensions.dart';
 import 'package:instagram/widgets/text_field_input.dart';
+import 'package:instagram/resources/auth_methods.dart';
+import 'package:instagram/utils/util_functions.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading = false;
 
   void dispose() {
     super.dispose();
@@ -23,7 +25,22 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordController.dispose();
   }
 
-  void loginUser() async {}
+  void loginUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMethods().loginUser(
+        email: _emailController.text, password: _passwordController.text);
+    if (res == 'success') {
+      print('logged in:${_emailController.text}');
+    } else {
+      print('logged in:fail:${_emailController.text}');
+      showSnackBar(context, res);
+    }
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,9 +93,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   color: blueColor,
                 ),
-                child: const Text(
-                  'Log in',
-                ),
+                child: _isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          color: primaryColor,
+                        ),
+                      )
+                    : const Text(
+                        'Log in',
+                      ),
               ),
             ),
             const SizedBox(
