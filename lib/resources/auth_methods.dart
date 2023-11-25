@@ -38,10 +38,31 @@ class AuthMethods {
           'following': [],
           'photoUrl': photoUrl,
         });
-
-        res = "success";
+        res = 'success';
       } else {
-        res = "Please enter all the fields";
+        res = 'Please enter all the fields';
+      }
+    } catch (err) {
+      return err.toString();
+    }
+    return res;
+  }
+
+  Future<String> loginUser({
+    required String email,
+    required String password,
+  }) async {
+    //todo why? is it a practice
+    String res = 'Some error Occurred';
+    try {
+      if (email.isNotEmpty || password.isNotEmpty) {
+        await _auth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+        res = 'success';
+      } else {
+        res = 'Please enter all the fields';
       }
     } catch (err) {
       return err.toString();
