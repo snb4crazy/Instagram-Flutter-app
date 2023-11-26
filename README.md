@@ -1,16 +1,20 @@
-# instagram
+# Instagram app in Flutter
 
-A new Flutter project.
+Simplified Instagram Application implemented with Flutter & Firebase
+Created during Udemy Flutter course
 
-## Getting Started
+## Features
+- Responsive UI (mobile & web versions)
+- ONLY (!) Email & Password Auth
+- Save|Share Posts (image & text)
+- List|Display Posts
+- Like & Comment on Posts
+- Search Users (Firebase)
+- Follow Users (Firebase)
+- List Posts, Followers & Following
+- Sign Out
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Tech Used
+**Backend**: Firebase Auth, Firebase Storage, Firebase Firestore
+Backend 100% in GCP
+**Frontend**: Flutter
