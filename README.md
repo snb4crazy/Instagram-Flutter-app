@@ -14,7 +14,7 @@ Created during Udemy Flutter course
 - List Posts, Followers & Following
 - Sign Out
 
-## Tech Used
-**Backend**: Firebase Auth, Firebase Storage, Firebase Firestore
-Backend 100% in GCP
-**Frontend**: Flutter
+## Stack
+- Backend: Firebase Auth, Firebase Storage, Firebase Firestore
+- Backend 100% in GCP
+- Frontend: Flutter
