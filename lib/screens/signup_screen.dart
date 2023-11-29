@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,7 +7,6 @@ import 'package:instagram/utils/dimensions.dart';
 import 'package:instagram/utils/util_functions.dart';
 import 'package:instagram/widgets/text_field_input.dart';
 import 'package:instagram/resources/auth_methods.dart';
-
 import 'package:instagram/responsive/mobile_screen_layout.dart';
 import 'package:instagram/responsive/responsive_layout.dart';
 import 'package:instagram/responsive/web_screen_layout.dart';
@@ -36,7 +34,7 @@ class _SignupScreenState extends State<SignupScreen> {
     _bioController.dispose();
   }
 
-  void signupUser() async {
+  void signUpUser() async {
     setState(() {
       _isLoading = true;
     });
@@ -48,23 +46,28 @@ class _SignupScreenState extends State<SignupScreen> {
       bio: _bioController.text,
       file: _image!,
     );
-    // if string returned is success, user has been created
     if (res == "success") {
       setState(() {
         _isLoading = false;
       });
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const ResponsiveLayout(
-            mobileScreenLayout: MobileScreenLayout(),
-            webScreenLayout: WebScreenLayout(),
+      if (context.mounted) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const ResponsiveLayout(
+              mobileScreenLayout: MobileScreenLayout(),
+              webScreenLayout: WebScreenLayout(),
+            ),
           ),
-        ),
-      );
-
+        );
+      }
+    } else {
       setState(() {
         _isLoading = false;
       });
+      // show the error
+      if (context.mounted) {
+        showSnackBar(context, res);
+      }
     }
   }
 
