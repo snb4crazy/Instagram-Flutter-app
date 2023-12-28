@@ -62,10 +62,8 @@ class _SearchScreenState extends State<SearchScreen> {
                       child: ListTile(
                         leading: CircleAvatar(
                           backgroundImage: NetworkImage(
-                            (snapshot.data! as dynamic).docs[index]
-                                    ['photoUrl'] ??
-                                'https://upload.wikimedia.org/wikipedia/commons/c/cd/Portrait_Placeholder_Square.png',
-                          ),
+                              (snapshot.data! as dynamic).docs[index]
+                                  ['photoUrl']),
                           radius: 16,
                         ),
                         title: Text(
