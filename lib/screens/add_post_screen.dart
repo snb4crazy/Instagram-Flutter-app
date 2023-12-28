@@ -6,6 +6,7 @@ import 'package:instagram/resources/firestore_access.dart';
 import 'package:instagram/utils/colors.dart';
 import 'package:instagram/utils/util_functions.dart';
 import 'package:provider/provider.dart';
+import 'package:instagram/models/user.dart';
 
 class AddPostScreen extends StatefulWidget {
   const AddPostScreen({Key? key}) : super(key: key);
@@ -59,7 +60,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
     );
   }
 
-  void postImage(String uid, String username, String profImage) async {
+  void postImage(String uid, String name, String profImage) async {
     setState(() {
       isLoading = true;
     });
@@ -70,7 +71,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
         _descriptionController.text,
         _file!,
         uid,
-        username,
+        name,
         profImage,
       );
       if (res == "success") {
@@ -115,89 +116,93 @@ class _AddPostScreenState extends State<AddPostScreen> {
   @override
   Widget build(BuildContext context) {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
-    return _file == null
-        ? Center(
-            child: IconButton(
-              icon: const Icon(
-                Icons.upload,
-              ),
-              onPressed: () => _selectImage(context),
-            ),
+    final User? user = Provider.of<UserProvider>(context).getUser;
+    return user == null
+        ? const Center(
+            child: CircularProgressIndicator(),
           )
-        : Scaffold(
-            appBar: AppBar(
-              backgroundColor: mobileBackgroundColor,
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: clearImage,
-              ),
-              title: const Text(
-                'Post to',
-              ),
-              centerTitle: false,
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () => postImage(
-                    userProvider.getUser!.uid,
-                    userProvider.getUser!.name,
-                    userProvider.getUser!.photoUrl,
+        : _file == null
+            ? Center(
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.upload,
                   ),
-                  child: const Text(
-                    "Post",
-                    style: TextStyle(
-                        color: Colors.blueAccent,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.0),
+                  onPressed: () => _selectImage(context),
+                ),
+              )
+            : Scaffold(
+                appBar: AppBar(
+                  backgroundColor: mobileBackgroundColor,
+                  leading: IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: clearImage,
                   ),
-                )
-              ],
-            ),
-            // POST FORM
-            body: Column(
-              children: <Widget>[
-                isLoading
-                    ? const LinearProgressIndicator()
-                    : const Padding(padding: EdgeInsets.only(top: 0.0)),
-                const Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(
+                  title: const Text(
+                    'Post to',
+                  ),
+                  centerTitle: false,
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => postImage(
+                        userProvider.getUser!.uid,
+                        userProvider.getUser!.name,
                         userProvider.getUser!.photoUrl,
                       ),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.3,
-                      child: TextField(
-                        controller: _descriptionController,
-                        decoration: const InputDecoration(
-                            hintText: "Write a caption...",
-                            border: InputBorder.none),
-                        maxLines: 8,
+                      child: const Text(
+                        "Post",
+                        style: TextStyle(
+                            color: Colors.blueAccent,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0),
                       ),
-                    ),
-                    SizedBox(
-                      height: 45.0,
-                      width: 45.0,
-                      child: AspectRatio(
-                        aspectRatio: 487 / 451,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                            fit: BoxFit.fill,
-                            alignment: FractionalOffset.topCenter,
-                            image: MemoryImage(_file!),
-                          )),
-                        ),
-                      ),
-                    ),
+                    )
                   ],
                 ),
-                const Divider(),
-              ],
-            ),
-          );
+                // POST FORM
+                body: Column(
+                  children: <Widget>[
+                    isLoading
+                        ? const LinearProgressIndicator()
+                        : const Padding(padding: EdgeInsets.only(top: 0.0)),
+                    const Divider(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        CircleAvatar(
+                          backgroundImage:
+                              NetworkImage(userProvider.getUser!.photoUrl),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          child: TextField(
+                            controller: _descriptionController,
+                            decoration: const InputDecoration(
+                                hintText: "Write a caption...",
+                                border: InputBorder.none),
+                            maxLines: 8,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 45.0,
+                          width: 45.0,
+                          child: AspectRatio(
+                            aspectRatio: 487 / 451,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                fit: BoxFit.fill,
+                                alignment: FractionalOffset.topCenter,
+                                image: MemoryImage(_file!),
+                              )),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Divider(),
+                  ],
+                ),
+              );
   }
 }
