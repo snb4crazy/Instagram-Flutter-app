@@ -1,12 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram/utils/colors.dart';
 import 'package:instagram/utils/screens_list.dart';
 
 class MobileScreenLayout extends StatefulWidget {
-  //String name = '';
   const MobileScreenLayout({Key? key}) : super(key: key);
 
   @override
@@ -37,17 +34,6 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
 
   void navigationTapped(int page) {
     pageController.jumpToPage(page);
-  }
-
-  void getUserName() async {
-    DocumentSnapshot snapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get();
-    print(snapshot.data());
-    setState(() {
-      String name = (snapshot.data() as Map<String, dynamic>)['name'];
-    });
   }
 
   @override
