@@ -22,7 +22,7 @@ class User {
     var snapshot = snap.data() as Map<String, dynamic>;
 
     return User(
-      name: snapshot["name"],
+      name: snapshot["name"] as String ?? '',
       uid: snapshot["uid"],
       email: snapshot["email"],
       photoUrl: snapshot["photoUrl"],
