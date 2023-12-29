@@ -48,7 +48,9 @@ class _PostCardState extends State<PostCard> {
         err.toString(),
       );
     }
-    setState(() {});
+    setState(() {
+      commentLen = commentLen;
+    });
   }
 
   deletePost(String postId) async {
@@ -113,7 +115,7 @@ class _PostCardState extends State<PostCard> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                widget.snap['username'].toString() ?? 'NO NAME',
+                                widget.snap['name'].toString() ?? 'NO NAME',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -288,7 +290,7 @@ class _PostCardState extends State<PostCard> {
                             style: const TextStyle(color: primaryColor),
                             children: [
                               TextSpan(
-                                text: widget.snap['username'].toString(),
+                                text: widget.snap['name'].toString(),
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
