@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:instagram/models/user.dart' as model;
 import 'package:instagram/providers/user_provider.dart';
 import 'package:instagram/resources/firestore_access.dart';
 import 'package:instagram/screens/comments_screen.dart';
@@ -40,7 +39,6 @@ class _PostCardState extends State<PostCard> {
           .doc(widget.snap['postId'])
           .collection('comments')
           .get();
-      print(snap);
       commentLen = snap.docs.length;
     } catch (err) {
       showSnackBar(
@@ -66,12 +64,9 @@ class _PostCardState extends State<PostCard> {
 
   @override
   Widget build(BuildContext context) {
-    //final User? user = Provider.of<UserProvider>(context).getUser;
-    //final UserProvider userProvider = Provider.of<UserProvider>(context);
     final User? user = Provider.of<UserProvider>(context).getUser;
     final width = mounted ? MediaQuery.of(context).size.width : 400;
 
-    print(widget.snap['profImage'].toString());
     return user == null
         ? const Center(
             child: CircularProgressIndicator(),
