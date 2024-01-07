@@ -38,7 +38,7 @@ class _SearchScreenState extends State<SearchScreen> {
               future: FirebaseFirestore.instance
                   .collection('users')
                   .where(
-                    'username',
+                    'name',
                     isGreaterThanOrEqualTo: searchController.text,
                   )
                   .get(),
@@ -47,6 +47,12 @@ class _SearchScreenState extends State<SearchScreen> {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
+                } else {
+                  if ((snapshot.data! as dynamic).docs.length == 0) {
+                    return const Center(
+                      child: Text('No users found!'),
+                    );
+                  }
                 }
                 return ListView.builder(
                   itemCount: (snapshot.data! as dynamic).docs.length,
@@ -67,13 +73,14 @@ class _SearchScreenState extends State<SearchScreen> {
                           radius: 16,
                         ),
                         title: Text(
-                          (snapshot.data! as dynamic).docs[index]['username'],
+                          (snapshot.data! as dynamic).docs[index]['name'],
                         ),
                       ),
                     );
                   },
                 );
               },
+              initialData: null,
             )
           : FutureBuilder(
               future: FirebaseFirestore.instance
