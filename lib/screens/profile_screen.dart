@@ -65,6 +65,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
+  getPosts() async {
+    var postSnap = await FirebaseFirestore.instance
+        .collection('posts')
+        .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .orderBy('datePublished', descending: true)
+        .get();
+    postLen = postSnap.docs.length;
+    setState(() {});
+    return postSnap.docs;
+  }
+
   @override
   Widget build(BuildContext context) {
     return isLoading
@@ -206,6 +217,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   future: FirebaseFirestore.instance
                       .collection('posts')
                       .where('uid', isEqualTo: widget.uid)
+                      //.orderBy('datePublished', descending: true)
                       .get(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
